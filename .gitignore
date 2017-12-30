@@ -1,0 +1,9 @@
+#ignore logs
+logs/
+
+#ignore dependent packages
+node_modules/
+package-lock.json
+
+#temp files
+*.swp
