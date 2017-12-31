@@ -3,7 +3,7 @@
 TASK_PATH="/home/snflow/Smartthings/hdmicec"
 
 PROGRAM="node"
-SCRIPT="cec-server+retropie.js"
+SCRIPT="cec-server.js"
 
 result=`ps aux | grep "${PROGRAM} ${SCRIPT}" | grep -v "grep" | wc -l`
 if [ $result -ge 1 ]

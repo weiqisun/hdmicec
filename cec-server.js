@@ -7,7 +7,7 @@ log4js.configure(
     appenders: {
       file: {
         type: 'file',
-        filename: './log/hdmicec.log',
+        filename: './logs/hdmicec.log',
         maxLogSize: 1 * 1024 * 1024, // = 1Mb
         numBackups: 3, // keep three backup files
       }
