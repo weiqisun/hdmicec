@@ -53,17 +53,15 @@ function onRequest(request, response) {
       response.end(msg);
       break;
     case "retro-on":
-      msg = 'nohup emulationstation &';
+      msg = 'emulationstation | sudo tee /dev/tty1';
       if (retroStatus() == "off") {
         var pre_cmd = 'echo "tx 1F:82:10:00" | cec-client RPI -s -d 1';
         systemExec(pre_cmd);
 
         logger.info("executing cmd: ".concat(msg));
-        const emulation = spawn('nohup', ['emulationstation'], {
-          detached: true,
-          stdio: 'ignore'
+        exec('emulationstation | sudo tee /dev/tty1', {
+          stdio: 'inherit'
         });
-        emulation.unref();
       }
       response.end(msg);
       break;
