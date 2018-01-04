@@ -7,3 +7,6 @@ package-lock.json
 
 #temp files
 *.swp
+
+#backup files
+*.bak

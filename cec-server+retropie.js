@@ -55,13 +55,13 @@ function onRequest(request, response) {
     case "retro-on":
       msg = 'emulationstation | sudo tee /dev/tty1';
       if (retroStatus() == "off") {
-        var pre_cmd = 'echo "tx 1F:82:10:00" | cec-client RPI -s -d 1';
-        systemExec(pre_cmd);
-
         logger.info("executing cmd: ".concat(msg));
         exec('emulationstation | sudo tee /dev/tty1', {
           stdio: 'inherit'
         });
+
+        var pre_cmd = 'echo "tx 1F:82:10:00" | cec-client RPI -s -d 1';
+        systemExec(pre_cmd);
       }
       response.end(msg);
       break;
@@ -76,6 +76,25 @@ function onRequest(request, response) {
       msg = 'checking emulationstation status';
       var state = retroStatus();
       response.setHeader("retro-status", state);
+      response.end(msg);
+      break;
+    case "ps4-on":
+      var device = request.headers['device'];
+      msg = 'turning ps4 on'
+      on(device);
+      response.end(msg);
+      break;
+    case "ps4-off":
+      var device = request.headers['device'];
+      msg = 'turning ps4 off'
+      off(device);
+      response.end(msg);
+      break;
+    case "ps4-status":
+      var device = request.headers['device'];
+      msg = 'checking ps4 status'
+      var state = getState(device);
+      response.setHeader("status", state);
       response.end(msg);
       break;
     default:
@@ -143,4 +162,32 @@ function retroStatus() {
   if (num == 0) return "off";
   else if (num > 0) return "on";
   else return "error";
+}
+
+function on(device) {
+  var command = 'echo "on '.concat(device, '" | cec-client RPI -s -d 1');
+  var stdout = systemSync(command);
+  if (stdout) {
+    logger.info(`stdout: ${stdout}`);
+  }
+}
+
+function off(device) {
+  var command = 'echo "standby '.concat(device, '" | cec-client RPI -s -d 1');
+  var stdout = systemSync(command);
+  if (stdout) {
+    logger.info(`stdout: ${stdout}`);
+  }
+}
+
+function getState(device) {
+  var command = 'echo "pow '.concat(device, '" | cec-client RPI -s -d 1');
+  var stdout = systemSync(command);
+  if (stdout == null) return "off";
+
+  logger.info(`stdout: ${stdout}`);
+  var arrayOfLines = stdout.match(/[^\r\n]+/g);
+  if (arrayOfLines.length != 2) return "off";
+  if (arrayOfLines[1] == 'power status: on') return "on";
+  return "off";
 }
