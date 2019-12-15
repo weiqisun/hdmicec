@@ -1,0 +1,6 @@
+# start hdmicecd when visual console tty8 is logged in
+currentSession=`temp=$(tty) ; echo ${temp:5}`
+virtualConsole="tty8"
+if [ "$currentSession" == "$virtualConsole" ] ; then
+    hdmicec start
+fi

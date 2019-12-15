@@ -60,8 +60,8 @@ function onRequest(request, response) {
           stdio: 'inherit'
         });
 
-        var pre_cmd = 'echo "tx 1F:82:10:00" | cec-client RPI -s -d 1';
-        systemExec(pre_cmd);
+//        var pre_cmd = 'echo "tx 1F:82:10:00" | cec-client RPI -s -d 1';
+//        systemExec(pre_cmd);
       }
       response.end(msg);
       break;

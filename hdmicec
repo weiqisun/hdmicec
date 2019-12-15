@@ -1,0 +1,36 @@
+#! /bin/sh
+
+d_status() {
+    result=`ps aux | grep "node cec-server" | grep -v "grep" | wc -l`   
+    if [ $result -ge 1 ]; then
+        echo "hdmicecd is running"
+        exit 0
+    else
+        echo "hdmicecd is not running"
+        exit 3
+    fi
+}
+
+case "$1" in
+  start)
+#    sudo -u snflow /home/snflow/bin/hdmicecd &
+    /home/snflow/bin/hdmicecd &
+    ;;
+  stop)
+    killall hdmicecd
+    pkill -f cec-server
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+  status)
+    d_status
+    ;;
+  *)
+    echo "Usage: hdmicec {start|stop|restart|status}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0
