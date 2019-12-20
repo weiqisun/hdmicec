@@ -1,10 +1,27 @@
 {
   "name": "hdmicec",
   "version": "1.0.0",
-  "author": "Weiqi Sun",
-  "scripts": {},
-  "dependencies": {
-    "log4js": ">=2.4.1"
+  "description": "hdmicec client server to receive and process hdmicec commands",
+  "main": "cec-server+retropie.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "private": true
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weiqisun/hdmicec.git"
+  },
+  "keywords": [
+    "hdmicec",
+    "nodejs",
+    "server"
+  ],
+  "author": "Weiqi Sun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/weiqisun/hdmicec/issues"
+  },
+  "homepage": "https://github.com/weiqisun/hdmicec#readme",
+  "dependencies": {
+    "log4js": "^6.1.0"
+  }
 }
